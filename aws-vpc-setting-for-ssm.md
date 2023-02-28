@@ -19,7 +19,7 @@
 - ssm에 접근을 위해 관련된 정책(policy)을 추가해준다. 
 - ssm으로 검색하면 몇개 나올 것이다. (이번엔 SSMReadOnly어쩌구를 선택했다)
 - 이렇게 하면 ssm 정보를 가져오는 데 문제없을 것이다.
-3. rds security group의 inbound 수정
+4. rds security group의 inbound 수정
 - 혹시라도 rds 쪽에서 접근이 안되면 
 - rds security gruop의 inbound에다가
 - 이 람다 함수가 가지고 있는 security group을 넣어주면 된다.
