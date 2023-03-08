@@ -1,5 +1,7 @@
 ## admatics domain
 
+
+
 ### 트립 관련
  - fms db:
  	- tb_trip_statuses 1 : N tb_trip_events
