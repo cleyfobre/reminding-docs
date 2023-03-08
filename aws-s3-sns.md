@@ -26,6 +26,8 @@
 }
 ``` 
 - the key point is that you should set 'Condition' like that.
-- in s3 bucket, add new event notification(이벤트 알림 탭)
+- in s3 bucket, 
+  - 속성 탭 클릭
+  - add new event notification(이벤트 알림 탭)
 - select your sns topic and complete
 - do test
