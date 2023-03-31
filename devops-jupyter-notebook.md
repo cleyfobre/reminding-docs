@@ -19,12 +19,12 @@
   - sudo pip3 install notebook
 
 2. jupyter password 설정
-  - python3
-  - >> from notebook.auth import passwd
-  - >> Enter password: 1234
-  - >> Verify password: 1234
+  - python3 치고 아래부턴 python 명령어
+  - from notebook.auth import passwd
+  - Enter password: 1234
+  - Verify password: 1234
   - 비밀번호 해시값 나옴.
-
+  
 3. jupyter 환경설정에 비밀번호 넣어둠
   - 환경설정 파일 생성하기
     - jupyter notebook --generate-config
@@ -72,7 +72,7 @@
     - which jupyter-notebook
     - 다음과 같이 뜸. /usr/local/bin/jupyter-notebook
   - sudo vi /etc/systemd/system/jupyter.service
-    - ```
+    ```
 	[Unit]
 	Description=Jupyter notebook server
 
@@ -84,7 +84,7 @@
 
 	[Install]
 	WantedBy=multi-user.target
-	```
+    ```
   - sudo systemctl daemon-reload
   - sudo systemctl enable jupyter
   - sudo systemctl start jupyter
