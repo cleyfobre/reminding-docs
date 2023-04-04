@@ -40,7 +40,7 @@
 - 도커 사용 권한
   - sudo chmod 666 /var/run/docker.sock
 
-### 젠킨스에 Docker image build
+### 방법1. 젠킨스 파이프라인
 
 - Jenkins 관리 -> 플러그인에 Docker, Docker pipeline 검색 및 설치
 - Jenkins 관리 -> Global credentials 등록
@@ -98,3 +98,69 @@
   - Build 해서 파일을 test-web ec2에 보내고 ssh 접속까지 했으나
   - 들어가서 명령어를 쓰는게 안됨
   - 들어갔다가 다시 jenkins container로 복귀함..
+
+
+### 방법2. 젠킨스 프리스타일
+
+- 프로젝트에서 사용할 Credentials 등록
+  - 젠킨스 설정에서 할 수 있음. 예를 들어
+  - Docker Hub 로그인 계정
+  - SSH 접속하는 private key
+  - SSH 호스트 주소 및 접속 디렉토리 등
+  - 등을 미리 저장해둔다.
+- 젠킨스 프리스타일 프로젝트 생성
+- Github repository 연결하고
+- 소스푸시 하면 자동으로 배포하기 위해
+  - GitHub hook trigger for GITScm polling 도 선택하기
+- [빌드환경] 에서 'Use secret text(s) or file(s)' 선택
+  - 위에서 설정한 도커 계정 선택하고
+  - Specific credentials 셀렉트박스 선택해준다.
+  - 그러면 내가 username, password에 해당하는 변수 설정해놓을 수 있음.
+  - 예를 들어 DOCKER_USERNAME, DOCKER_PASSWORD
+- [Build Steps]에서 그레들 빌드하고 도커 로그인해서 푸시도 할꺼임
+  - Execute shell 추가해서 그래들 빌드
+    ```
+    chmod +x gradlew
+    ./gradlew clean build
+    ```
+  - 또 Execute shell 추가해서 도커 로그인 (아까 만든 변수 사용) 하고
+  - 소스파일에 있는 Dockerfile로 이미지 만들고
+  - docker hub에 푸시하고
+  - 로컬에 있는 이미지 삭제하는 명령어임.
+    ```
+    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD docker.io
+    docker build -t cleyfobre/test-web:0.0.1 .
+    docker push cleyfobre/test-web:0.0.1
+    docker rmi cleyfobre/test-web:0.0.1
+    ```
+- [빌드 후 조치]에서 SSH로 접속, 도커 설치, 이미지 풀, 앱 실행
+  - 'Send build artifacts over SSH' 선택해주고
+  - 젠킨스 설정에서 저장해뒀던 SSH 접속할 서버 불러오고 (ex. test-web)
+  - 'Exec command'에 아래와 같이 작성.
+  - 첫번째 단락은 기존에 있는 도커관련 정보들 다 삭제하고
+  - 두번째 단락은 도커를 인스톨하고
+  - 세번째 단락은 도커 로그인해서 이미지 풀받고,
+  - 같은 이름의 컨테이너 있으면 삭제하고 앱 컨테이너 실행
+  ```
+  sudo rm -f /etc/apt/keyrings/docker.gpg
+  sudo apt-get purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-compose-plugin
+  sudo apt-get autoremove -y --purge docker-engine docker docker.io docker-ce docker-compose-plugin
+  sudo rm -rf /var/lib/docker /etc/docker
+  sudo rm -rf /var/run/docker.sock
+
+  sudo apt-get update
+  sudo apt-get install \
+      ca-certificates \
+      curl \
+      gnupg
+  sudo curl -fsSL get.docker.com -o get-docker.sh
+  sudo sh get-docker.sh
+
+  sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD docker.io
+  sudo docker pull cleyfobre/test-web:0.0.1
+  sudo docker ps -q --filter name="test-web" | grep -q . && docker rm -f $(docker ps -aq --filter name="test-web")
+  sudo docker run -d --name test-web -p 8080:8080 cleyfobre/test-web:0.0.1
+  ```
+- 배포 완료되었으면, API 테스트하기
+  - HTTP GET 52.79.251.44:8080/main
+    - Hello, World
