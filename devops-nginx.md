@@ -2,11 +2,15 @@
 
 ### 목표
 
+- Nginx로 Reverse Proxy 구축하기
+
+### 과정
+
 - Springboot 앱을 도커 이미지로 빌드
 - Nginx 웹서버를 도커 이미지로 빌드
 - docker-compose로 컨테이너 실행
 
-### 스탭 바이 스탭
+### 상세 내용
 
 - 현 프로젝트 Root 폴더에서 시작
 - Springboot app
@@ -70,3 +74,4 @@
 - 브라우져에서 테스트
   - http://localhost/main
     - hello, world
+

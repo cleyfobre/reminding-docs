@@ -161,6 +161,6 @@
   sudo docker ps -q --filter name="test-web" | grep -q . && docker rm -f $(docker ps -aq --filter name="test-web")
   sudo docker run -d --name test-web -p 8080:8080 cleyfobre/test-web:0.0.1
   ```
-- 배포 완료되었으면, API 테스트하기
+- 배포 완료되었으면, API 테스트하기.
   - HTTP GET 52.79.251.44:8080/main
     - Hello, World
