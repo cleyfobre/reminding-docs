@@ -18,6 +18,5 @@
   - Deployment & Service: 몽고db 앱 with internal service
   - Deployment & Service: webapp with external service
 
-### test-k8s steps
-- ConfigMap: from
-42:56 https://www.youtube.com/watch?v=s_o8dwzRlu4
+### test-k8s
+- github repo: https://github.com/cleyfobre/test-k8s
