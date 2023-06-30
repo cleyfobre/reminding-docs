@@ -8,7 +8,7 @@
   - name: serial-tracking-datalake
 
 2. Add Glue Database
-  - name: data-tracking-database
+  - name: serial-tracking-database
 
 3. Configure Athena
   - move to
@@ -41,17 +41,17 @@
 
 3. Configure /etc/aws-kinesis/agent.json
 ```
-	{
-	    "cloudwatch.emitMetrics": true,
-	    "firehose.endpoint": "firehose.ap-northeast-2.amazonaws.com",
-	    "flows": [
-	            {
-	                "filePattern": "/var/log/ecommerce/access.log",
-	                "deliveryStream": "serial-tracking-deliverystream",
-	                "initialPosition": "START_OF_FILE"
-	            }
-	        ]
-	}
+{
+	"cloudwatch.emitMetrics": true,
+	"firehose.endpoint": "firehose.ap-northeast-2.amazonaws.com",
+	"flows": [
+	  {
+	      "filePattern": "/var/log/ecommerce/access.log",
+	      "deliveryStream": "serial-tracking-deliverystream",
+	      "initialPosition": "START_OF_FILE"
+	  }
+	]
+}
 ```
   - filePattern: the log file that you'd like to use
   - deliveryStream: name of firehose delivery stream that you made
@@ -65,3 +65,30 @@
 ### Check S3 bucket
 
 1. folder path would be like 'yyyy/mm/dd/hh'
+
+2. choose any of data
+
+3. Run S3 query (with json format)
+
+### Glue Crawler
+
+1. Name: serial-tracking-crawler
+
+2. Add data source
+  - S3 path: s3://serial-tracking-datalake/krmalog/
+
+3. Make sure for glue to have permissions below
+  - AWSGlueServiceRole
+  - AmazonS3FullAccess
+
+4. select a glue role that you made on step 3
+
+5. select target database: serial-tracking-database
+
+6. finish and 'Run crawler'
+
+### Set Athena
+
+1. choose data base you made
+
+2. you can see file list as name of 'table'
