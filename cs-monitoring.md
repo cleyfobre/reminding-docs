@@ -1,6 +1,5 @@
 ## monitoring
 
-
 ### CPU Usage
 
 - A high CPU usage indicates that the server is working hard to handle the requests. 
