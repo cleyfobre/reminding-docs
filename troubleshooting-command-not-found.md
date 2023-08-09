@@ -22,12 +22,12 @@
   - sudo로 설치하면 pm2의 path는 /usr/local/bin/pm2 로 설정된다.
   - 그렇기 때문에 젠킨스에서 접속해도 pm2 명령어를 찾을 수 있는 것이다.
 
-### 의문
+### 의문 및 해결
 
 - 젠킨스로 ubuntu 로그인을 했는데, 왜 PATH는 root 권한처럼 나올까. chatGPT한테 물어봤다.
 - I believe your Jenkins job is running a non-interactive shell, which means that it is not executing the same initialization scripts that your interactive shell does.
   - 그니까 원래 정상적으로 로그인하면 interactive shell이 실행되어 초기화 스크립트가 도는데,
-  - 나의 젠킨스 아이템은 로그인해도 non-interactive shell이라 초기화 스크립트가 안돌았다고 하는하는데, shell로 로그인 했을 때와 jenkins 로그인했을 때 어떻게 다른지 물어봤다.
+  - 나의 젠킨스 아이템은 로그인해도 non-interactive shell이라 초기화 스크립트가 안돌았다고 하는데, shell로 로그인 했을 때와 jenkins 로그인했을 때 어떻게 다른지 물어봤다.
 - when you use PuTTY to connect to your EC2 instance via SSH, you are connecting with an interactive shell and the shell initialization scripts such as ~/.bash_profile, ~/.bashrc, etc will be executed. On the other hand, when you use Jenkins to connect to your EC2 instance via SSH, it uses a non-interactive shell and these initialization scripts might not be executed.
   - 그렇다고 한다.. 젠킨스를 통해 로그인하는 행위는 non-interactive shell를 사용하는 것이기 때문에 위에서 언급한 initialization scripts들이 실행되지 않는다.
   - 그래서 환경 변수가 다른 이슈가 발생하는 것이다.

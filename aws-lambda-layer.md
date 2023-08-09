@@ -28,3 +28,5 @@
       - 아래와 같은 명령어로 zip파일을 host로 복사해온다.
       - docker cp abcd:/layer/mypackage.zip .
   - 이제 AWS lambda 콘솔에서 레이어 추가하면 된다.
+
+- postgresql: psycopg2 

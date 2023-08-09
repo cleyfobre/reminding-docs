@@ -36,7 +36,7 @@
 2. Install an agent
   > sudo yum -y install aws-kinesis-agent
   - IF THERE ISN'T YUM, HERE IT IS
-    - https://github.com/awslabs/amazon-kinesis-agent.git
+    - git clone https://github.com/awslabs/amazon-kinesis-agent.git
     - Instead of installing yum, git clone this.
 
 3. Configure /etc/aws-kinesis/agent.json
