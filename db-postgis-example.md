@@ -15,20 +15,27 @@ SELECT nextval('yc_cluster_id_seq');
 ```
 
 ### 가장 많이 분포해 있는 작업
+- eps := 0.00005
+  - 대략 5미터
+- minpoints := 2
+  - 묶음 안에 2개 이상
+- ('목4동' is null OR dong = '목4동')
+  - '' 값이 null이면 where절 무시, 있으면 dong 조건으로 검색
 ```
 SELECT
-    work_cluster_id,
+    task_cluster,
     COUNT(*) AS point_count,
     ST_Centroid(ST_Collect(geo_point)) AS centroid
 FROM (
     SELECT
-        *,
-        ST_ClusterDBSCAN(geo_point, eps := 0.01, minpoints := 3) OVER () AS work_cluster_id
-    FROM yc_target AS subquery
+        geo_point,
+        ST_ClusterDBSCAN(geo_point, eps := 0.00005, minpoints := 2) OVER () AS task_cluster
+    FROM yc_task
+    where ('목4동' is null OR dong = '목4동')
 ) AS clusters
-WHERE work_cluster_id IS NOT NULL
-GROUP BY work_cluster_id
-ORDER BY point_count DESC
+WHERE task_cluster IS NOT NULL
+GROUP BY task_cluster
+ORDER BY point_count desc;
 ```
 
 ### 해당 위경도에 속한 도로 가져오기
