@@ -1,0 +1,10 @@
+{
+  "terminal:open-terminal.external.root": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "T"
+    }
+  ]
+}
