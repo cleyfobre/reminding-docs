@@ -1,4 +1,4 @@
-## admatics domain
+### aimatics domain
 
 ### 트립 관련
  
