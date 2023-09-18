@@ -1,4 +1,3 @@
-## postgresql
 
 ### 같은 클러스터 있는지 체크 (1 km = 1000m)
 - 2m안에 있는 클러스터 체크
@@ -46,3 +45,5 @@ FROM yc_road
 ORDER BY geom <-> ST_GeomFromText('POINT(126.832795 37.530064)', 4326)
 LIMIT 1;
 ```
+
+#db #postgresql #postgis

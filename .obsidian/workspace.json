@@ -11,12 +11,8 @@
             "id": "3f7aff3c5e5894df",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "aimatics-domain.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "graph",
+              "state": {}
             }
           }
         ]
@@ -65,8 +61,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -86,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "aimatics-domain.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "aimatics-domain.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "aimatics-domain.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -147,6 +138,15 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ab3ede3e3132fcbe",
-  "lastOpenFiles": []
+  "active": "3f7aff3c5e5894df",
+  "lastOpenFiles": [
+    "1_Projects/db-postgis-example.md",
+    "aimatics-domain.md",
+    "1_Projects/Untitled",
+    "4_Archives",
+    "3_Resources",
+    "2_Areas",
+    "1_Projects",
+    "Untitled.canvas"
+  ]
 }
