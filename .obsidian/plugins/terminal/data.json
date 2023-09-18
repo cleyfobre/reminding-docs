@@ -1,0 +1,35 @@
+{
+  "addToCommand": true,
+  "addToContextMenu": true,
+  "createInstanceNearExistingOnes": true,
+  "errorNoticeTimeout": 0,
+  "exposeInternalModules": true,
+  "focusOnNewInstance": true,
+  "hideStatusBar": "focused",
+  "language": "",
+  "lastReadChangelogVersion": "3.12.3",
+  "newInstanceBehavior": "newHorizontalSplit",
+  "noticeTimeout": 5,
+  "openChangelogOnUpdate": true,
+  "pinNewInstance": true,
+  "preferredRenderer": "webgl",
+  "profiles": {
+    "6a030c26-0818-4c1c-87e7-2f0eaf66a9ed": {
+      "args": [],
+      "executable": "powershell",
+      "name": "Powershell",
+      "platforms": {
+        "win32": true
+      },
+      "restoreHistory": true,
+      "successExitCodes": [
+        "0",
+        "SIGINT",
+        "SIGTERM"
+      ],
+      "terminalOptions": {},
+      "type": "external"
+    }
+  },
+  "recovery": {}
+}

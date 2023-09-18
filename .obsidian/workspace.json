@@ -1,18 +1,22 @@
 {
   "main": {
-    "id": "be7f6b5fc9d85ef4",
+    "id": "9869e689a9583eb4",
     "type": "split",
     "children": [
       {
-        "id": "81fb0a5e09365d8b",
+        "id": "a14f8d1c0a36a0c2",
         "type": "tabs",
         "children": [
           {
-            "id": "3f7aff3c5e5894df",
+            "id": "bc4f252899a30e17",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1_Projects/db-postgis-example.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -21,15 +25,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "d8d6ff49a590f1ee",
+    "id": "73a21aafbfe58a72",
     "type": "split",
     "children": [
       {
-        "id": "4f6eceff2597f246",
+        "id": "ae41b27c22db63df",
         "type": "tabs",
         "children": [
           {
-            "id": "7c7debddb58de5e7",
+            "id": "2b91bcfdcbd5ac6a",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -39,12 +43,12 @@
             }
           },
           {
-            "id": "ab3ede3e3132fcbe",
+            "id": "b04545d40ef4db9c",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "terminal",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -54,7 +58,7 @@
             }
           },
           {
-            "id": "eff7f96309e35c48",
+            "id": "13515a05b5464eb5",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -68,19 +72,20 @@
     "width": 300
   },
   "right": {
-    "id": "df197aff1faa86e4",
+    "id": "16b1f9ae92422aef",
     "type": "split",
     "children": [
       {
-        "id": "9452e02889317374",
+        "id": "844276f45054a2aa",
         "type": "tabs",
         "children": [
           {
-            "id": "5eeff495dd96b9c5",
+            "id": "4ea12268c98aaa7c",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1_Projects/db-postgis-example.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -92,18 +97,19 @@
             }
           },
           {
-            "id": "b505a0bed3ce78e3",
+            "id": "b06fba984b31f7cb",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1_Projects/db-postgis-example.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "4ef21a99880fbea4",
+            "id": "6a437f12b8b09a71",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -114,11 +120,23 @@
             }
           },
           {
-            "id": "29e6d35eed767249",
+            "id": "d648fc436b4dba40",
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1_Projects/db-postgis-example.md"
+              }
+            }
+          },
+          {
+            "id": "8758cff6ab06fbb7",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency"
+              }
             }
           }
         ]
@@ -135,10 +153,11 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "terminal:Open terminal": false
     }
   },
-  "active": "3f7aff3c5e5894df",
+  "active": "bc4f252899a30e17",
   "lastOpenFiles": [
     "1_Projects/db-postgis-example.md",
     "aimatics-domain.md",
