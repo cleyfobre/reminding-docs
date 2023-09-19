@@ -139,8 +139,11 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "b68a820384287720",
+  "active": "2b91bcfdcbd5ac6a",
   "lastOpenFiles": [
+    "4_Archieves",
+    "3_Resources",
+    "2_Areas",
     "1_Projects/db-postgis-example.md",
     "1_Projects",
     "devops-nginx-reverse-proxy.md",
