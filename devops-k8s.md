@@ -20,3 +20,5 @@
 
 ### test-k8s
 - github repo: https://github.com/cleyfobre/test-k8s
+
+#devops #kubernetis #k8s
