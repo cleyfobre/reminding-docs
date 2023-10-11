@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "a14f8d1c0a36a0c2",
+        "id": "4923c7784ea83f9e",
         "type": "tabs",
         "children": [
           {
-            "id": "bc4f252899a30e17",
+            "id": "b68a820384287720",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1_Projects/db-postgis-example.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "graph",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1_Projects/db-postgis-example.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1_Projects/db-postgis-example.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,19 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1_Projects/db-postgis-example.md"
-              }
-            }
-          },
-          {
-            "id": "8758cff6ab06fbb7",
-            "type": "leaf",
-            "state": {
-              "type": "all-properties",
-              "state": {
-                "sortOrder": "frequency"
-              }
+              "state": {}
             }
           }
         ]
@@ -157,15 +139,16 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "bc4f252899a30e17",
+  "active": "2b91bcfdcbd5ac6a",
   "lastOpenFiles": [
-    "1_Projects/db-postgis-example.md",
-    "aimatics-domain.md",
-    "1_Projects/Untitled",
-    "4_Archives",
+    "4_Archieves",
     "3_Resources",
     "2_Areas",
+    "1_Projects/db-postgis-example.md",
     "1_Projects",
-    "Untitled.canvas"
+    "devops-nginx-reverse-proxy.md",
+    "devops-k8s.md",
+    "Untitled.canvas",
+    "aws-seminar-20230804.md"
   ]
 }
