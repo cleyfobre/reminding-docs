@@ -7,5 +7,7 @@
   - 디스크 폴더별 사용량을 보여줌
 
 ### 유용함
-1. root 기준으로해서 제일 많이 디스크 잡아먹는 폴더 파
-  - sudo du -h --max-depth=1 .
+- root 기준으로해서 제일 많이 디스크 잡아먹는 폴더 파
+	- sudo du -h --max-depth=1 .
+- 어떤 디렉토리가 용량 많이 차지하는지 파악
+	- sudo du -hsx /* | sort -rh | head -n 40
