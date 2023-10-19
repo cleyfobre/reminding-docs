@@ -1,3 +1,4 @@
+#aws #ec2 #disk #df #du #docker #journal
 #### 문제
 - 젠킨스 서버 disk usage가 95%인 상황
 

@@ -1,4 +1,4 @@
-
+#db #database #postgresql #postgis #rds #위치데이터 #지오데이터 #geocoding
 ### 같은 클러스터 있는지 체크 (1 km = 1000m)
 - 2m안에 있는 클러스터 체크
 
@@ -8,7 +8,7 @@ from yc_target yt
 where public.st_distancespheroid(yt.geo_point, st_setsrid(st_point(126.94380071738566, 37.513454135402945), 4326)) < 2;
 ```
 
-### get nextval sequence
+### sequence 다음 값 가져오기
 ```
 SELECT nextval('yc_cluster_id_seq');
 ```
