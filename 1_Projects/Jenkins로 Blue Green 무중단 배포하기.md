@@ -1,7 +1,7 @@
 #젠킨스 #jenkins #jenkinsfile #pipeline #파이프라인 #무중단배포 #bluegreen #nginx 
 
 > [!tip]
-> 해당 문서는 https://github.com/cleyfobre/blue-green-deploy 의 Readme 성격의 문서이다.
+> 해당 문서는 https://github.com/cleyfobre/blue-green-deploy 의 Readme 문서입니다.
 
 #### jenkinsfile 설정
 
