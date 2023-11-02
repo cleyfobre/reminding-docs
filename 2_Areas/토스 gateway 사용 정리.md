@@ -38,3 +38,25 @@ Gateway는 그 값이 토스앱에서 만든 요청인지, 중복된 값인지, 
 ![dynamic security](dynamic_security.jpg)
 
 #### 인증서를 이용한 인증/인가
+Gateway는 토스 앱 뿐만 아니라 토스 개발자, 외부 회사로부터의 접근도 허용해야 한다. 이는 클라이언트의 인증서를 이용한 mTLS API를 이용한다.
+
+> [!todo] 아직 잘 모르는 내용이나 일단 쓴다
+> Istio에서 제공하는 mTLS flow위에 Gateway 앱을 두어 인증/인가를 처리하고 있다. Istio만을 이용해서 할 수도 있지만, Gateway 앱처럼 코드 베이스로 하면 Istio의 matching rule보다 자유도도 높고, Auditing 로직도 처리할 수 있고, 카나리 배포의 이점을 누릴 수 있기 때문이다.
+
+#### Circuit Breaker
+내부 서비스 간에 서킷 브레이킹을 거는 것도 중요하나, 근원적인 트래픽을 발생시키는 클라이언트에게 백프레셔를 빠르게 주기 위해서는 Gateway에 서킷 브레이킹을 거는 것이 중요하다. 
+
+> [!todo] 아직 잘 모르는 내용이나 일단 쓴다
+> 서킷 브레이킹은 두 레이어에서 걸 수 있다. 인프라 레이어와 애플리케이션 레이어다. 먼저 Istio를 활용한 인프라 레이어의 서킷 브레이킹이 있으며, Resilience4J나 Hystrix와 같은 라이브러리를 이용한 앱 레이어의 서킷 브레이킹이 있다.
+> 
+> Istio를 활용하면 호스트 단위로 쉽고 빠르게 전체 적용이 가능하다. 하지만 호스트 단위로만 서킷 브레이킹을 걸 수 있고, 설정도 제한적이다. 토스는 각 애플리케이션이나 Gateway에 서킷 브레이킹을 적용하여 호스트나 Route 단위 혹은 기능 단위로 정교하게 서킷 브레이킹을 걸고 있다.
+
+#### 모니터링
+토스는 Gateway에 모니터링의 세 요소인 Logging, Metric and Tracing을 적용하고 있다. 
+
+- Logging
+	- Gateway에 지나는 모든 요청 및 응답의 Route id, method, URI, 상태 코드 등을 모두 Elasticsearch에 남기고 있다. 
+- Metric
+	- Metric에는 시스템에서 수집하는 메트릭과 애플리케이션에서 수집하는 메트릭이 있다. 두 메트릭 모두 Prometheus가 수집을 한다. Node Exporter를 통해 시스템 메트릭을, Spring actuator를 통해 애플리케이션의 메트릭을 수집하여 Grafana로 시각화하고 슬랙으로 알림을 보내고 있다.
+	- 시스템 메트릭에는 CPU, memory, 네트워크 RX, TX 트래픽 등이 있고, 애플리케이션 메트릭에는 JVM 쓰레드블록 상황이나 세대별 메모리 할당, Full GC 발생 여부 감지 등이 있다.
+	- Spring Cloud Gateway에서는 Route별 메트릭도 제공한다. 토스는 여기에 Path 값을 더해 API Path별로 Route 메트릭을 확인한다.
