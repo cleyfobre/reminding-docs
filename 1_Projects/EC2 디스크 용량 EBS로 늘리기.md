@@ -1,4 +1,3 @@
-
 #devops #disk #aws #ec2 #ebs
 
 1. df -h 에서 루트 파일시스템 확인
