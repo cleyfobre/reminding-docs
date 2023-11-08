@@ -51,4 +51,4 @@ statusIn.value(1).value("2"); // 컴파일 시점에 오류
 ```
 
 #### Specification
-Spring Data JPA에서는 Criteria를 활용하여 쿼리를 비교적 깔끔한 코드로 만들 수 있게 해준다. [[Spring JPA Specification 정리]] 를 참고한다.
+Spring Data JPA에서는 Criteria를 활용하여 쿼리를 비교적 깔끔한 코드로 만들 수 있게 해준다. [[Spring Data JPA Specification 정리]] 를 참고한다.
