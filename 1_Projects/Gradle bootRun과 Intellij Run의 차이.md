@@ -9,6 +9,7 @@ Intellij에서 **Run**버튼으로 실행하는 Application run configurations�
 - 커스텀하게 설정 파라미터를 넘길 수도 있다. (environment variables, program arguments, working directory, and more)
 - UX적으로 편하게 실행과 디버깅이 가능하다. 
 
+#todo
 #### "gradle bootRun" Task
 - gradle bootRun은 Springboot gradle plugin에서 제공되는 gradle task의 일부분이다. 프로젝트의 빌드 시스템의 일부분이며 build.gradle과 같은 스크립트에서 정의된다.
 - Intellij 안의 Gradle 탭이나 커맨드라인에서 사용 가능하다.
