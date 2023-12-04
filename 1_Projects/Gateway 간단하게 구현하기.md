@@ -1,4 +1,4 @@
-#gateway #springcloudgateway
+#gateway #springcloudgateway #springcloud 
 
 > [!note]
 > https://github.com/cleyfobre/gateway-demo 레포지토리의 소스를 참고한다.
