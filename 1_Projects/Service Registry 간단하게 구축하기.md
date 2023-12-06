@@ -1,10 +1,10 @@
-#eureka #servicediscovery #springcloudeureka
+#eureka #servicediscovery #springcloudeureka #msa
 
 > [!note]
 > https://www.youtube.com/watch?v=-gLLeoS1m6s 이 영상을 요약한 문서이다.
 > Git repo: https://github.com/cleyfobre/eureka-demo
 
-MSA에서 8080 port의 A서비스가 8081 port의 B서비스를 호출하는 구조라고 가정해보자. 근데 8081 port의 B서비스가 너무 바빠서 10개의 인스턴스까지 스케일아웃을 했다. 그리고 그 중에 하 나가 포트 8085에 있다. 그러면 A서비스는 B서비스의 모든 인스턴스를 알고 있어야만 할까? 여기서 Service Discovery의 필요성이 생긴다.
+MSA에서 8080 port의 A서비스가 8081 port의 B서비스를 호출하는 구조라고 가정해보자. 근데 8081 port의 B서비스가 너무 바빠서 10개의 인스턴스까지 스케일아웃을 했다. 그리고 그 중에 하 나가 포트 8085에 있다. 그러면 A서비스는 B서비스의 모든 인스턴스를 알고 있어야만 할까? 여기서 Service Discovery의 필요성이 생기며, 이를 담당하는 서비스를 Service Registry라고 한다.
 
 #### Service Discovery 아키텍처
 
