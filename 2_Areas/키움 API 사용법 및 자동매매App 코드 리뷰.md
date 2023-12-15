@@ -54,7 +54,11 @@ Python 3.7.13 (default. Mar 23. 2019. 12:22:34) MSC v.1915 32 bit (intel) ...
 #### PyCharm에 가상환경 연동
 앞서 만든 가상환경을 Pycharm 프로젝트에서 사용할 수 있도록 Settings에서 연동해줘야 한다. 가상환경은 보통 (Windows 기준) `~/anaconda3/envs/myenv/python.exe` 형태로 위치해 있다. 키움API를 사용하기 위해서는 앞서 설치한  `PyQt5` 라이브러리가 필수이다. 이는 python 에서 UI 개발에 필요한 라이브러리이나, 안에 유용한 패키지들이 많이 들어 있어서 이를 활용한다.
 
-#### 키움 자동매매 핵심 사항 ✨
+#### 자동매매App 핵심 사항 ✨
+
+0. App Flow
+
+![[Pasted image 20231215104736.png]]
 
 1. PyQt5
 application은 계속 실행되어야 한다. 아래 `exec_()` 은 Kiwoom 클래스 안에 있는 QEventLoop 객체들을 실행시키며 application이 계속 살아있도록 한다.
@@ -75,8 +79,8 @@ class Kiwoom(QAxWidget):
 		self.setControl("KHOPENAPI.KHOpenAPICtrl.1")
 ```
 
-3. OpenAPI 기본 사용법🔥
-OpenAPI에는 TR데이터, 실시간 데이터가 있다. 그 둘의 차이는 다음과 같다. 
+3. 키움 OpenAPI 기본 사용법🔥
+키움 OpenAPI에는 TR데이터, 실시간 데이터가 있다. 그 둘의 차이는 다음과 같다. 
 - TR 데이터: 본인이 요청해서 받음
 	- 보통 `opw20015` 형식으로 생겼다. TR 데이터 요청하기 위해 `CommRqData` 나 `GetCommData`와 같은  함수를 사용할 때 파라미터로 들어간다. 보통 사용자 지정의 문자열(RqName)과 함께 쓰인다.
 - 실시간 데이터: 키움이 실시간으로 보냄
@@ -94,22 +98,26 @@ class Kiwoom(QAxWidget):
 		self.setControl("KHOPENAPI.KHOpenAPICtrl.1")
 
 		self.login_event_loop = QEventLoop()
-		self.OnEventConnect.connect(self.login_handler)
-		self.login()
+		
+		self.OnEventConnect.connect(self.login_handler) 🛎️
 
-		# login()에서 시작된 event loop가 끝나기 전까진 hello()는 실행되지 않는다.
-		self.hello()
+		# login()에서 시작된 event loop가 끝나기 전까진 my_account_info()는 실행되지 않는다.
+		self.login()
+		self.my_account_info()
 
 	def login(self):
-		self.dynamicCall("commConnect()")
+		self.dynamicCall("commConnect()") 🧨
 		self.login_event_loop.exec_()
 
-	def login_handler(self, error_code):
+	def login_handler(self, error_code): 
 		if error_code == 0:
-			# Write your code
+			# something...
 		else:
 			print("login failed")
 		self.login_event_loop.exit()
+
+	def my_account_info(self):
+		# something...
 ```
 
 TR 데이터를 얻으려면, 키움 API에서 정의한 TR 코드를 가지고 요청한다. 더불어 사용자가 정의한 명칭인 RqName과 함께 요청한다. 예제는 아래와 같다.
@@ -120,25 +128,36 @@ class Kiwoom(QAxWidget):
 		super().__init__()
 		self.setControl("KHOPENAPI.KHOpenAPICtrl.1")
 
-		self.tr_event_loop = QEventLoop()
-		self.OnReceiveTrData.connect(self.hello_handler)
-		self.hello()
+		self.kiwoon_event_loop = QEventLoop()
+		self.login_event_loop = QEventLoop()
+		
+		self.OnEventConnect.connect(self.login_handler)
+		self.OnReceiveTrData.connect(self._trdata_handler) 🛎️
 
-	def hello(self):
+		self.login()
+		self.my_account_info()
+
+	def login(self):
+		# something...
+
+	def login_handler(self, error_code):
+		# something...
+		
+	def my_account_info(self):
 		self.dynamicCall("SetInputValue(QString, QString)", "계좌번호", "1234123411")
 		self.dynamicCall("SetInputValue(QString, QString)", "비밀번호", "")
 		self.dynamicCall("SetInputValue(QString, QString)", "비밀번호입력매체구분", "00")
 		self.dynamicCall("SetInputValue(QString, QString)", "조회구분", "2")
 		self.dynamicCall("CommRqData(QString, QString, QString, QString)",
-                 "예수금상세현황요청", "opw00001", "0", 2000)
-		self.tr_event_loop.exec_()
+                 "예수금상세현황요청", "opw00001", "0", 2000) 🧨
+		self.kiwoon_event_loop.exec_()
 
-	def hello_handler(self, scr_no, rq_name, tr_code, record_name, prev_next):
+	def _trdata_handler(self, scr_no, rq_name, tr_code, record_name, prev_next):
 		if rq_name == "예수금상세현황요청":
 			balance = int(self.dynamicCall("GetCommData(QString, QString, int, QString)", 
 				tr_code, rq_name, 0, "예수금"))
 			print(balance)
-		self.tr_event_loop.exit()
+		self.kiwoon_event_loop.exit()
 ```
 
 위 예제는 예수금 TR 데이터를 가져오는 코드이다. 예수금 정보의 TR 코드는 `opw00001` 이다. 해당 코드를 KOA Studio에서 검색해서 보면 Input과 Output에 어떤 컬럼이 들어가는지 알 수 있다. 아래 이미지를 확인해보자. 
@@ -160,29 +179,38 @@ class Kiwoom(QAxWidget):
 
 > [!tip] 물론 조건 검색할 때 1초 당 받을 수 있는 건 수는 제한이 있다.
 
-#### autotradingj: condition_search() 코드 리뷰
+#### condition_search() 코드 flow
 _condition_search()_ 의 코드 이해를 위한 정리이다. Tree 형태의 정리가 복잡할 수 있으므로 이모티콘과 함께 정리하도록 한다. 
 - 내가 정의한 함수: ⚙️
 - 트리거가 되는 함수: 🧨
 - 이벤트 발생: 🛎️
 
-- condition_search() ⚙️
-	1. dynamicCall `GetConditionLoad()` 🧨
-	2. 이벤트 루프를 실행한다. `condition_search_event_loop.exec_()`
-	3. 조건검색기 조회 이벤트 발생 🛎️
+- "조건 검색을 해보자!" condition_search() ⚙️
+	1. "내가 만든 검색기 가져오자!"
+		dynamicCall `GetConditionLoad()` 🧨
+	2. "이벤트 루프를 실행하자!" `condition_search_event_loop.exec_()`
+	3. "이제 검색기를 확인해보자!" 이벤트 발생 🛎️
 		`self.OnReceiveConditionVer.connect(self._condition_ver_handler)`
-		1. dynamicCall `GetConditionNameList()`
-		2. dynamicCall `SendCondition`(realtime: 1) 🧨
-			이후 TR데이터와 실시간 데이터 이벤트를 발생시킨다. 
-		3. 조건검색기 관련된 TR 데이터 이벤트 발생 🛎️
+		1. "검색기 목록을 가져오자!"
+			dynamicCall `GetConditionNameList()`
+		2. "이제 검색기로 종목을 검색해보자!"
+			dynamicCall `SendCondition`(realtime: 1) 🧨
+			_이후 TR데이터와 실시간 데이터 이벤트를 발생시킨다._
+		3. "검색기가 종목을 추천해줬다!" 이벤트 발생 🛎️
 			`self.OnReceiveTrCondition.connect(self._condition_search_handler)`
-			- 이벤트 루프를 종료한다. `condition_search_event_loop.exit()`
-		4. 조건검색기 결과가 실시간 데이터로 이벤트 발생 🛎️`self.OnReceiveRealCondition.connect(self._realtime_condition_search_handler)`
-			1. 만약 장이 끝나면 더이상 해당 종목의 데이터를 수신하지 않는다. 
+			- "이벤트 루프를 종료하자!" `condition_search_event_loop.exit()`
+		4. "검색기가 방금 실시간으로XX전자를 추천해줬다!" 이벤트 발생 🛎 
+			`self.OnReceiveRealCondition.connect(self._realtime_condition_search_handler)`
+			1. "만약 장이 끝나면 더이상 해당 종목의 데이터를 수신하지 말자!" 
 				dynamicCall `SendConditionStop()`
-			2. 장 중이면 해당 종목의 데이터를 수신한다.
+			2. "장 중이면 해당 종목의 데이터를 수신하자"
 				dynamicCall `SetRealReg()` 🧨
-			3. 실시간 종목 데이터의 이벤트 발생 🛎️
+			3. "지금 XX전자의 데이터가 왔다!" 이벤트 발생 🛎️
 				`self.OnReceiveRealData.connect(self._real_data_handler)`
-				1. dynamicCall `SetRealReg()`
-				2. 
+				1. "XX전자 매수(매도) 요청 하자"
+					dynamicCall `SendOrder()`🧨
+				2. "매수(매도) 요청한 결과가 왔다. 확인해보자!" 이벤트 발생 🛎️
+					`self.OnReceiveChejanData.connect(self._chejan_handler)`
+					1. "매도가 완료되었구나. 이제 XX전자 데이터를 받지 말자!"
+						dynamicCall `SetRealRemove`
+				
