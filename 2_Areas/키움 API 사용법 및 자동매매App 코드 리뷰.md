@@ -61,7 +61,7 @@ Python 3.7.13 (default. Mar 23. 2019. 12:22:34) MSC v.1915 32 bit (intel) ...
 ![[Pasted image 20231215104736.png]]
 
 1. PyQt5
-application은 계속 실행되어야 한다. 아래 `exec_()` 은 Kiwoom 클래스 안에 있는 QEventLoop 객체들을 실행시키며 application이 계속 살아있도록 한다.
+application은 계속 실행되어야 한다. 아래 `exec_()` 은 해당 python 프로그램을 이벤트 루프에 진입시킨다. 이벤트 루프는 무한 루프이며 프로그램이 계속 진행되도록 한다. 또한 Kiwoom 클래스 안에 있는 QEventLoop 객체들을 처리한다.
 
 ```python
 self.app = QApplication(sys.argv)
@@ -181,36 +181,62 @@ class Kiwoom(QAxWidget):
 
 #### condition_search() 코드 flow
 _condition_search()_ 의 코드 이해를 위한 정리이다. Tree 형태의 정리가 복잡할 수 있으므로 이모티콘과 함께 정리하도록 한다. 
-- 내가 정의한 함수: ⚙️
-- 트리거가 되는 함수: 🧨
-- 이벤트 발생: 🛎️
 
-- "조건 검색을 해보자!" condition_search() ⚙️
-	1. "내가 만든 검색기 가져오자!"
-		dynamicCall `GetConditionLoad()` 🧨
-	2. "이벤트 루프를 실행하자!" `condition_search_event_loop.exec_()`
-	3. "이제 검색기를 확인해보자!" 이벤트 발생 🛎️
-		`self.OnReceiveConditionVer.connect(self._condition_ver_handler)`
-		1. "검색기 목록을 가져오자!"
-			dynamicCall `GetConditionNameList()`
-		2. "이제 검색기로 종목을 검색해보자!"
-			dynamicCall `SendCondition`(realtime: 1) 🧨
-			_이후 TR데이터와 실시간 데이터 이벤트를 발생시킨다._
-		3. "검색기가 종목을 추천해줬다!" 이벤트 발생 🛎️
-			`self.OnReceiveTrCondition.connect(self._condition_search_handler)`
-			- "이벤트 루프를 종료하자!" `condition_search_event_loop.exit()`
-		4. "검색기가 방금 실시간으로XX전자를 추천해줬다!" 이벤트 발생 🛎 
-			`self.OnReceiveRealCondition.connect(self._realtime_condition_search_handler)`
-			1. "만약 장이 끝나면 더이상 해당 종목의 데이터를 수신하지 말자!" 
-				dynamicCall `SendConditionStop()`
-			2. "장 중이면 해당 종목의 데이터를 수신하자"
-				dynamicCall `SetRealReg()` 🧨
-			3. "지금 XX전자의 데이터가 왔다!" 이벤트 발생 🛎️
-				`self.OnReceiveRealData.connect(self._real_data_handler)`
-				1. "XX전자 매수(매도) 요청 하자"
-					dynamicCall `SendOrder()`🧨
-				2. "매수(매도) 요청한 결과가 왔다. 확인해보자!" 이벤트 발생 🛎️
-					`self.OnReceiveChejanData.connect(self._chejan_handler)`
-					1. "매도가 완료되었구나. 이제 XX전자 데이터를 받지 말자!"
-						dynamicCall `SetRealRemove`
-				
+1. 나의 검색기 정보를 요청한다.
+
+```python
+def condition_search():
+	self.dynamicCall("GetConditionLoad()") 🧨
+```
+
+2. 나의 검색기를 가져와 검색을 시작한다.
+
+```python
+def __init__(self):
+	self.OnReceiveConditionVer.connect(self._condition_ver_handler) 🛎️
+
+def _condition_ver_handler(self):
+	cond_list = self.dynamicCall("GetConditionNameList()").split(";")
+	cond_search_success = self.dynamicCall(
+		"SendCondition(QString, QString, int, int)", 
+		"0156", cond_name, cond_idx, 1) 🧨
+```
+
+3. 검색기가 추천해준 종목을 확인한다.
+
+```python
+def __init__(self):
+	self.OnReceiveTrCondition.connect(self._condition_search_handler) 🛎️
+	self.OnReceiveRealCondition.connect(self._realtime_condition_search_handler) 🛎️
+
+def _realtime_condition_search_handler(self, code, event, cond_name, cond_idx):
+	self.dynamicCall("SetRealReg(QString, QString, QString, QString)",
+		2000, code, 20, "1") 🧨
+```
+
+4. 종목의 실시간 데이터를 받아서 매매한다.
+
+```python
+def __init__(self):
+	self.OnReceiveRealData.connect(self._real_data_handler) 🛎️
+
+def _real_data_handler(self, s_code, real_type, real_data):
+	self.dynamicCall("SendOrder(QString, QString, QString, int, QString, int, int, QString, QString)",
+		["신규매도", self.candidates_dict[s_code]["주문용화면번호"], self.account_num, 2,
+		s_code, quantity, 0, "03", ""]) 🧨
+	self.dynamicCall("SendOrder(QString, QString, QString, int, QString, int, int, QString, QString)",
+		["신규매수", self.candidates_dict[s_code]["주문용화면번호"], self.account_num, 1,
+		s_code, quantity, 0, "00", ""]) 🧨
+```
+
+5. 매매 결과를 확인하고, 필요없는 실시간 연결을 끊는다.
+
+```python
+def __init__(self):
+	self.OnReceiveChejanData.connect(self._chejan_handler) 🛎️
+
+def _chejan_handler(self, sGubun, nItemCnt, sFidList):
+	self.dynamicCall("SetRealRemove(QString, QString)", 
+		self.candidates_dict[s_code]['화면번호'], s_code)
+```
+
