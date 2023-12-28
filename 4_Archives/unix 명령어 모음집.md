@@ -28,3 +28,7 @@
 
 `cat log.txt | grep 'chetime' | cut -d':' -f6 | cut -d',' -f1 | sort | uniq -c | sort -n`
 
+특정 문자열이 포함된 열을 카운드할 때 아래와 같이 했다.
+
+`grep "'chetime': 11" log3.txt | grep "삼성전자" | wc -l`
+
