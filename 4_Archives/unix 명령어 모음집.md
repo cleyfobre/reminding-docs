@@ -24,11 +24,27 @@
 {'localtime': '11:04:42', 'name': '삼성전자', 'chetime': 110441, ...
 ```
 
-특정 컬럼으로 group by 하여 count하고자할 때 아래와 같이 사용했다.
+- 특정 컬럼으로 group by 하여 count하고자할 때 아래와 같이 사용했다.
 
-`cat log.txt | grep 'chetime' | cut -d':' -f6 | cut -d',' -f1 | sort | uniq -c | sort -n`
+> [!tip] sort 하고 uniq를 해야 완벽하게 group by 된다. 
 
-특정 문자열이 포함된 열을 카운드할 때 아래와 같이 했다.
+```sh
+cat log.txt | grep 'chetime' | cut -d':' -f6 | cut -d',' -f1 | sort | uniq -c | sort -n
+```
 
-`grep "'chetime': 11" log3.txt | grep "삼성전자" | wc -l`
+- 특정 문자열이 포함된 열을 카운드할 때 아래와 같이 했다.
+
+```sh
+grep "'chetime': 11" log3.txt | grep "삼성전자" | wc -l
+```
+
+- 쌓이고 있는 로그를 분석하고자 할 때, 아래와 같이 본 떠서 작업한다.
+
+```sh
+# unix
+cat hello.txt > world.txt
+
+#windows 
+type hello.txt > world.txt
+```
 
