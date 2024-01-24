@@ -16,7 +16,7 @@ redis-cli
 
 #### Command examples
 
-1. String
+2. String
 
 a라는 key에 다양한 값을 넣는다. nx(False)와 xx(True)와 같이 파라미터를 추가로 넣을 수도 있다. 코딩할 때 유용할 듯 하다. 특정 조건을 분기처리하는 것이 아니라, 조건의 True/False 값을 넣어 Redis가 필터링 하도록 말이다.
 
@@ -54,3 +54,17 @@ llen bikes
 > [!note] Other types
 > 데이터 타입은 이 밖에도 Geospatial, Bitfields, Probabailistic and Time series 등이 있다.
 
+#### 자주 사용하는 명령어
+
+- redis 명령어의 결과를 파일로 옮기기 #redis
+
+```sh
+echo "keys *" | redis-cli -h hello.co.kr -p 6379 > test.txt
+redis-cli -h hello.co.kr -p 6379 keys "k??????:0118" > ss.txt
+```
+
+- redis 특정 키 삭제
+
+```sh
+redis-cli -h hello.co.kr -p 6379 keys "k??????:0118" | xargs redis-cli -h hello.co.kr -p 6379 del
+```

@@ -1,6 +1,6 @@
 #jupyter #jupyternotebook #brew #homebrew #mac
 
-맥북 (Mac Book) 에서 brew를 통해 Jupyter notebook 설치 및 실행하면 에러를 발생시키거나, 별 짓을 다 해서 잘 돌아가도 찝찝한 익셉션을 발생시킨다... 대충 아래와 같다.
+맥북 (Mac Book) 에서 __Homebrew__ 를 통해 Jupyter notebook 설치 및 실행하면 에러를 발생시키거나, 별 짓을 다 해서 잘 돌아가도 찝찝한 익셉션을 발생시킨다... 대충 아래와 같다.
 
 ```sh
 [W 2024-01-12 14:18:27.177 JupyterNotebookApp] Missing or misshapen translation settings schema:
