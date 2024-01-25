@@ -17,7 +17,7 @@ cmd.exe
 ```
 
 참고로 나의 예제에서 디렉토리는 **C:\Users\pc\Documents\workspace\stockinfo\kiwoom**이며,
-32bit python과 pyqt5가 설치된 가상환경의 이름은 **myenv**이다.
+32bit python과 pyqt5가 설치된 가상환경의 이름은 **myenv**이다. 가상환경을 세팅하는 것은 [[키움 API 사용법 및 자동매매App 코드 리뷰]] 를 참고한다.
 
 **여기까지 어플리케이션 코드와 bat 파일이 완성된 상태다.** 다음은 Windows 레지스트리에 등록하는 단계다.
 
