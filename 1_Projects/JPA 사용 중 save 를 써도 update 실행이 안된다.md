@@ -2,7 +2,7 @@
 
 ### 문제
 
-일단 문제의 코드는 아래와 같이 두개의 Java 파일이 있다.
+일단 문제의 코드는 아래와 같이 두개의 Java 파일이 있다. (실제 코드가 아닌 이름만 바꾼 샘플 코드이다.)
 
 ```java
 @Service
@@ -36,7 +36,7 @@ public interface YourRepository extends JpaRepository<Your, Long>, JpaSpecificat
 
 ### 문제 원인
 
-원인은  `yourRepository.go()` 였다. 이 코드가 없으면 update 쿼리가 잘 실행된다. 근데 이 쿼리를 넣으면 실행이 안된다. 원인은 찾았으나 그래서 이게 무슨 이유 때문에 문제를 일으켰는지 알아야 한다.
+원인은  `yourRepository.go()` 였다. 이 코드가 없으면 update 쿼리가 잘 실행된다. 근데 이 코드를 넣으면 실행이 안된다. 원인은 찾았으나 그래서 이게 무슨 이유 때문에 문제를 일으켰는지 알아야 한다.
 
 go() 함수에는 `@Modifying(clearAutomatically = true)` 어노테이션이 붙어있다. 이 어노테이션은 해당 쿼리를 실행시킨 뒤 영속성 컨텍스트를 자동으로 flush 한다. clearAutomatically 속성이 true 이기 때문이다. 이는 DB와 엔터티의 상태를 일치하기 위함이다. 이 과정에서 앞선 update 쿼리가 커밋되지 않은 상태에서 영속성이 초기화되어버려 update 쿼리가 날아갔을 가능성이 크다. 
 

@@ -75,3 +75,8 @@ redis-cli -h hello.co.kr -p 6379 keys "k??????:0118" | xargs redis-cli -h hello.
 redis-cli -h hello.co.kr monitor | grep 192.168.88.37 | cut -d. -f1 | uniq -c
 ```
 
+- 모니터링 필터링 적용해서 보기
+
+```sh
+redis-cli -h hello.co.kr monitor | grep 192.168.88.00 | cut -d. -f1 | uniq -c
+```
