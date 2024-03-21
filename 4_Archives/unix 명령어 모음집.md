@@ -49,6 +49,7 @@ type hello.txt > world.txt
 ```
 
 - jq로 json 형식 데이터면 키를 abc 순으로 정렬하여 보기. 갸꿀팁 
+- 
 ```sh
 % redis-cli -h hello.com get myKey | jq 'to_entries | sort_by(.key) | from_entries'
 {
