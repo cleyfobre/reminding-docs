@@ -1,8 +1,23 @@
 #유닉스 #리눅스 #우분투 #unix #linux #ubuntu #cli #command
 
+### sudo su -
+현재 접속된 user가 super user로 등록되어 있을 시, 현재 user 접속 정보로 root 권한을 얻는다.
+- 예제
+	- 현재 유저는 dev1인 상황
+	- root의 권한을 얻기 위해 sudo su - 입력
+	- dev1의 패스워드를 입력
+	- 성공!
+
+```sh
+dev1@gazua-1**:**~**$ sudo su -
+[sudo] dev1 암호: 
+root@gazua-1:~#
+```
+
 #### 서버 상태 알기
 
-- ps -a
+- ps -ef | grep "java"
+	- java 실행 중인지 확인
 - ps aux
 	- 현재 돌고있는 프로세스들의 cpu, memory 사용량 등을 표시해줌
 - df -h
