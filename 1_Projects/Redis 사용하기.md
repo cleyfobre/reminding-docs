@@ -1,4 +1,4 @@
-#redis 
+#redis #acl
 
 #### Install and Start
 
@@ -80,3 +80,52 @@ redis-cli -h hello.co.kr monitor | grep 192.168.88.37 | cut -d. -f1 | uniq -c
 ```sh
 redis-cli -h hello.co.kr monitor | grep 192.168.88.00 | cut -d. -f1 | uniq -c
 ```
+
+### redis acl
+유저 설정하는 옵션이다. 
+
+1. redis.conf 내에 aclfile /etc/redis/users.acl 추가(주석해제)
+
+```sh
+# aclfile /etc/redis/users.acl
+# 부분 주석 해제
+
+aclfile /etc/redis/users.acl
+```
+
+2. aclfile /etc/redis/users.acl 생성
+
+```sh
+# 빈파일을 생성하여 저장할 수 있도록 처리
+vi /etc/redis/users.acl
+```
+
+3. redis 재시작
+
+```sh
+systemctl restart redis-server
+```
+
+4. 유저 추가 후 저장
+
+```sh
+#redis 서비스에 접속
+[root@ip-10-0-0-10 redis]# redis-cli
+
+#기존 환경설정에 저장해둔 초기 유저로 접속(6버전 이상은 초기 사용자가 default)
+127.0.0.1:6379> auth default me1234
+OK
+
+#유저 추가 
+#유저명 : oil, 패스워드: me1234, 접근권한 memanager로 시작하는 모든키에 모든 권한 부여
+127.0.0.1:6379> ACL SETUSER oil on >me1234 ~memanager* allcommands
+OK
+
+#유저 정보 저장
+127.0.0.1:6379> acl save
+OK
+
+127.0.0.1:6379> exit
+```
+
+위 행위를 한 뒤 미리 생성했던 users.acl 을 열어보면 위에서 생성한 유저가 추가되어 있다.
