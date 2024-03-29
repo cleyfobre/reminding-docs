@@ -60,7 +60,7 @@ If you use `docker run` with detached mode, you can do right here
 docker run -p 80:80 abc -d
 ```
 
-### 이미지에 Argument 적용
+### 컨테이너와 상호작용하기
 아래와 같은 파이썬 프로그램을 보자. 유저로부터 파라미터를 받아야 하는 프로그램이다. 
 
 ```python
@@ -76,4 +76,47 @@ else:
 	print(rnd_num)
 ```
 
-해당 프로그램은 유저와 상호작용해야 하기 때문에 이미지를 실행할 때 `-i -t`를 넣어주어야 한다. 이것은 터미널로 상호작용할 수 있다는 것을 의미한다. `-i`는 interactive(상호작용)를, `-t`는 tty(터미널 입력)를 의미한다.
+해당 프로그램은 유저와 상호작용해야 하기 때문에 `docker run`을 할 때 `-i -t`를 넣어주어야 한다. 이것은 터미널로 상호작용할 수 있다는 것을 의미한다. `-i`는 interactive(상호작용)를, `-t`는 tty(터미널 생성)를 의미한다.
+
+만약 `docker start`라면 어떻게 해야 할까. `-i -a`를 하면 된다. `docker start`는 default가 detached이기 때문에 `-a`를 이용해 attached를 해주고, `-i`로 상호작용하면 된다. `-t`는 필요없다. 실제 사용 예제는 아래와 같을 것이다.
+
+```
+docker run -it abc
+docker start -ia abc
+```
+
+### 삭제
+컨테이너는 `docker rm`으로 삭제하고 이미지는 `docker rmi`로 삭제한다. 원칙은 `docker ps -a`로 모든 컨테이너 리스트에 나오지 않는 즉, 전~혀 사용하지 않는 이미지만을 삭제할 수 있다. `docker rmi abc`로 이미지를 삭제하면 아래와 같이 여러개가 삭제되는 것을 볼 수 있을 텐데, 이것들은 레이어이다. 위에서 설명했듯, build할 때 상황에 따라 레이어가 생성된다.
+
+```sh
+$ docker rmi abc
+Deleted: sha256:a64a6e03b0551e1cefa94db6cc6677fb1efed3c557d173f79584ff4ec474b5ae
+Deleted: sha256:d950b497e5a0787af1b4a04e0298b693501d756b610b09e5501bc0d1feb02465
+Deleted: sha256:01270ad0039edf3793b69b5374505aad02fc2e4464f460215a803fa728eaef8c
+```
+
+그리고 `docker run`할 때 `--rm` 과 같이 실행시켜주면 나중에 컨테이너 종료될 때 알아서 삭제된다. 즉, `docker ps -a` 해도 컨테이너가 남지 않고 알아서 아예 삭제가 된다. 매우 유용하다. 운영상에서 종료된 컨테이너는 다시 시작되는 경우는 드물다. 개발이나 테스트면 모를까.
+
+### Inspect 활용하기
+`docker image inspect abc`하면 해당 이미지의 상세 정보를 볼 수 있다. 끝
+
+### 복사하기 from/to 컨테이너 
+내 로컬에 만약 hello폴더에 world.txt라는 파일이 있다고 가정하자. 그리고 이 파일을 컨테이너 doongdoong 에다가 복사하려고 한다. 아래와 같이 해보자.
+
+```
+docker cp hello/world.txt doongdoong:/hello
+```
+
+hello 폴더 안에 있는 world.txt는 doongdoong 컨테이너의 hello 폴더안에 복사되었다. 컨테이너 안에 hello 폴더가 없으면 알아서 생성될 것이다. 반대는 어떨까. 컨테이너 안에 있는 폴더 및 파일을 로컬로 복사하는 것이다.
+
+```
+docker cp doongdoong:/hello/world.txt hello
+```
+
+음. 잘 작동한다.
+
+> [!note] 어떤 경우에 컨테이너로(로부터) 복사하기 기능을 사용하게 될까?
+> 쉽게 상상되지는 않는다. 배포되어 실행되고 있는 컨테이너에 뭔가 파일이 변경되었다고 한다면, 다시 배포를 하게될 지언정 파일을 복사해서 넣진 않을 것이니 말이다. 하지만 이런 경우가 있다. 시스템의 로그를 수동으로 로컬로 가져와서 확인해보고자 한다면, 꽤 유용한 기능이 될 것이다.
+
+
+
