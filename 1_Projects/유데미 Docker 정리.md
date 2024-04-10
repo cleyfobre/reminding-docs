@@ -118,5 +118,21 @@ docker cp doongdoong:/hello/world.txt hello
 > [!note] 어떤 경우에 컨테이너로(로부터) 복사하기 기능을 사용하게 될까?
 > 쉽게 상상되지는 않는다. 배포되어 실행되고 있는 컨테이너에 뭔가 파일이 변경되었다고 한다면, 다시 배포를 하게될 지언정 파일을 복사해서 넣진 않을 것이니 말이다. 하지만 이런 경우가 있다. 시스템의 로그를 수동으로 로컬로 가져와서 확인해보고자 한다면, 꽤 유용한 기능이 될 것이다.
 
+### 이미지에 태그 달기
+아래와 같이 `-t`와 함께 빌드를 해본다.
+
+```
+docker build -t goale:latest .
+```
+
+그리고 `docker images`로 봤을 때, 그냥 빌드했을 때와는 다르게 `<none>`이 아닌 이름과 태그로 row가 채워져 있다.
+
+```
+youngmin@gazua docker-playground % docker images
+REPOSITORY                   TAG       IMAGE ID       CREATED         SIZE
+goal                         latest    f071cd3d1d19   9 seconds ago   1.1GB
+```
 
 
+
+섹션3 할 차례...
