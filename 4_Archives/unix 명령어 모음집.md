@@ -1,4 +1,4 @@
-#유닉스 #리눅스 #우분투 #unix #linux #ubuntu #cli #command
+#유닉스 #리눅스 #우분투 #unix #linux #ubuntu #cli #command #ssh
 
 ### sudo su -
 현재 접속된 user가 super user로 등록되어 있을 시, 현재 user 접속 정보로 root 권한을 얻는다.
@@ -83,4 +83,27 @@ youngmin@gazua % cat history.txt | grep -n "120059"
 50028:120059,76400,76800,76000,76100,0,0.00,+1
 50029:120059,76400,76800,76000,76100,0,0.00,+5
 50030:120059,76400,76800,76000,76000,-100,-0.13,-284
+```
+
+# SSH 치트키
+
+#### 일일이 치지말고 미리 세팅해놓자.
+
+1. `.ssh` 폴더에 `config` 파일을 만들자.
+
+```sh
+.ssh % sudo vi config
+```
+
+2. 대충 아래처럼 작성해놓자. `pem` 파일이 있는 경우와 그냥 패스워드로 들어가는 경우다.
+
+```sh
+Host stage
+    HostName stage.hello.co.kr
+    User ubuntu
+    IdentityFile ~/.ssh/hello.pem
+
+Host dev
+    HostName dev.hello.co.kr
+    User ubuntu
 ```
