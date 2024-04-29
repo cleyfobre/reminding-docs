@@ -81,6 +81,12 @@ redis-cli -h hello.co.kr monitor | grep 192.168.88.37 | cut -d. -f1 | uniq -c
 redis-cli -h hello.co.kr monitor | grep 192.168.88.00 | cut -d. -f1 | uniq -c
 ```
 
+- memory 확인
+
+```
+hello.co.kr:6379> memory usage e570078:20240329:HISTORY
+(integer) 340 (바이트)
+```
 ### redis acl
 유저 설정하는 옵션이다. 
 
