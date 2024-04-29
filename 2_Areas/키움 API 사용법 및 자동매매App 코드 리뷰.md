@@ -7,7 +7,7 @@
 conda --version
 ```
 
-아래는 기본 conda 명령어 모음이다.
+아래는 기본 conda 명령어 모음이자 설치 방법이다. (구버전)
 
 ```sh
 # 32bit로 변경하기
@@ -29,6 +29,8 @@ conda --version
 (myenv) > python
 Python 3.7.13 (default. Mar 23. 2019. 12:22:34) MSC v.1915 32 bit (intel) ...
 ```
+
+#python #conda #가상환경 #venv #myenv 
 
 > [!tip] 최근에 설치 명령어가 조금 바뀐 것 같다. 아래와 같이 해보자.
 

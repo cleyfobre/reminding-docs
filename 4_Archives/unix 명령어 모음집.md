@@ -1,8 +1,23 @@
-#유닉스 #리눅스 #우분투 #unix #linux #ubuntu #cli #command
+#유닉스 #리눅스 #우분투 #unix #linux #ubuntu #cli #command #ssh
+
+### sudo su -
+현재 접속된 user가 super user로 등록되어 있을 시, 현재 user 접속 정보로 root 권한을 얻는다.
+- 예제
+	- 현재 유저는 dev1인 상황
+	- root의 권한을 얻기 위해 sudo su - 입력
+	- dev1의 패스워드를 입력
+	- 성공!
+
+```sh
+dev1@gazua-1**:**~**$ sudo su -
+[sudo] dev1 암호: 
+root@gazua-1:~#
+```
 
 #### 서버 상태 알기
 
-- ps -a
+- ps -ef | grep "java"
+	- java 실행 중인지 확인
 - ps aux
 	- 현재 돌고있는 프로세스들의 cpu, memory 사용량 등을 표시해줌
 - df -h
@@ -48,3 +63,47 @@ cat hello.txt > world.txt
 type hello.txt > world.txt
 ```
 
+- jq로 json 형식 데이터면 키를 abc 순으로 정렬하여 보기. 갸꿀팁 
+
+```sh
+% redis-cli -h hello.com get myKey | jq 'to_entries | sort_by(.key) | from_entries'
+{
+	"a": "first",
+	"b": "second"
+}
+```
+
+- 특정 단어가 몇번째 줄에 있는지 보기
+
+```sh
+youngmin@gazua % cat history.txt | grep -n "120059"
+50025:120059,76400,76800,76000,76100,0,0.00,+5
+50026:120059,76400,76800,76000,76000,-100,-0.13,-46
+50027:120059,76400,76800,76000,76100,0,0.00,+10
+50028:120059,76400,76800,76000,76100,0,0.00,+1
+50029:120059,76400,76800,76000,76100,0,0.00,+5
+50030:120059,76400,76800,76000,76000,-100,-0.13,-284
+```
+
+# SSH 치트키
+
+#### 일일이 치지말고 미리 세팅해놓자.
+
+1. `.ssh` 폴더에 `config` 파일을 만들자.
+
+```sh
+.ssh % sudo vi config
+```
+
+2. 대충 아래처럼 작성해놓자. `pem` 파일이 있는 경우와 그냥 패스워드로 들어가는 경우다.
+
+```sh
+Host stage
+    HostName stage.hello.co.kr
+    User ubuntu
+    IdentityFile ~/.ssh/hello.pem
+
+Host dev
+    HostName dev.hello.co.kr
+    User ubuntu
+```
