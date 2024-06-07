@@ -7,7 +7,7 @@
 conda --version
 ```
 
-아래는 기본 conda 명령어 모음이자 설치 방법이다. (구버전)
+(구버전) 아래는 기본 conda 명령어 모음이자 설치 방법이다.
 
 ```sh
 # 32bit로 변경하기
@@ -46,12 +46,15 @@ Python 3.7.13 (default. Mar 23. 2019. 12:22:34) MSC v.1915 32 bit (intel) ...
 # 필요한 라이브러리 미리 설치해주자
 (myenv) > pip install --upgrade pip setuptools wheel sip
 (myenv) > pip install pyqt5
+(myenv) > pip install redis
 ```
 
 > [!danger] 혹시 pyqt5 설치가 다음과 같은 에러와 실패한다면
 > error: Microsoft Visual C++ 14.0 is required
 >  http://visualstudio.microsoft.com/ko/visual-cpp-build-tools 에서 빌드툴을 설치해준 후,
 >  다시 pyqt5를 설치해보자!
+>  C#, C++ 관련 개발 용어가 써있는 기능을 체크해줬다.
+>
 
 #### PyCharm에 가상환경 연동
 앞서 만든 가상환경을 Pycharm 프로젝트에서 사용할 수 있도록 Settings에서 연동해줘야 한다. 가상환경은 보통 (Windows 기준) `~/anaconda3/envs/myenv/python.exe` 형태로 위치해 있다. 키움API를 사용하기 위해서는 앞서 설치한  `PyQt5` 라이브러리가 필수이다. 이는 python 에서 UI 개발에 필요한 라이브러리이나, 안에 유용한 패키지들이 많이 들어 있어서 이를 활용한다.
