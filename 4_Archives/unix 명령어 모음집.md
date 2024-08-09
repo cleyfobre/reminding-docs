@@ -85,6 +85,12 @@ youngmin@gazua % cat history.txt | grep -n "120059"
 50030:120059,76400,76800,76000,76000,-100,-0.13,-284
 ```
 
+- 실시간 명령어 0.1초 주기로 실행해서 보기
+
+```
+watch -d -n 0.1 ‘redis-cli --user system_api GET e005930 | jq .price,.mdvolume,.redisDate’
+```
+
 # SSH 치트키
 
 #### 일일이 치지말고 미리 세팅해놓자.

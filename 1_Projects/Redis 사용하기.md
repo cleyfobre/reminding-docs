@@ -69,6 +69,10 @@ redis-cli -h hello.co.kr -p 6379 keys "k??????:0118" > ss.txt
 redis-cli -h hello.co.kr -p 6379 keys "k??????:0118" | xargs redis-cli -h hello.co.kr -p 6379 del
 ```
 
+```sh
+redis-cli -h dev.eztechfin.co.kr -p 6379 --user system_api --pass strategy\@88 keys "t*" | xargs redis-cli -h dev.eztechfin.co.kr -p 6379 --user system_api --pass strategy\@88 del
+```
+
 - redis-cli 사용하면서 필터링 적용하기
 
 ```sh
