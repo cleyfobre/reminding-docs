@@ -56,6 +56,13 @@ llen bikes
 
 #### 자주 사용하는 명령어
 
+- key별로 메모리 점유량 구하기.. 근데 key 대상이 많으면 성능 이슈를 일으킬 것 같다.
+	- 아래 명령어는 `a*`로 모든 key를 찾고, 찾은 key들을 loop돌면서 `memory usage 'key'` 명령어를 실행하는 것이다. loop 돌면서 redis-cli 명령어를 실행한다는 점에서 성능 이슈를 우려했다.
+
+```sh
+redis-cli -h hello.co.kr -p 6379 --user system_api --pass hello\@88 keys "a*" | while read key; do echo "$key: $(redis-cli -h hello.co.kr -p 6379 --user system_api --pass hello\@88 memory usage $key)"; done
+```
+
 - redis 명령어의 결과를 파일로 옮기기 #redis
 
 ```sh
