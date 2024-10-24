@@ -1,0 +1,1 @@
+#linux #unix #환경변수 #env #environment 
