@@ -3,6 +3,7 @@
 > [!note] Undertow가 쓰는 쓰레드에 대해 알아 보기 위해 작성
 > 회사 app에서 사용하는 웹서버는 톰캣이 아니라 언더토우였다. jhipster에서 자동 생성해서 쓰다보니 당연히 스프링 기본 값인 톰캣으로 되어있겠지. 라고 생각했었던게 실수였다. 하지만 쓰레드 리스트를 확인했을 때, 스레드 이름이 XNIO로 시작하는 것을 보고 톰캣이 아니구나. 라는 걸 알게되었고. 언더토우에서 쓰는 스레드에 대해 알고 싶어 정리했다.
 
+
 In a Spring Boot application, the default names of threads in the pool depend on the embedded server you’re using (Tomcat, Jetty, or Undertow). Here’s how threads are typically named for each server:
 
 ### 1. **Tomcat (Default in Spring Boot)**
@@ -14,6 +15,9 @@ In a Spring Boot application, the default names of threads in the pool depend on
    - **Example**: `http-nio-8080-exec-1`, `http-nio-8080-exec-2`, etc.
 
 ### 2. **Undertow**
+
+XNIO is an I/O library created by JBoss (Red Hat) specifically designed to be lightweight and efficient for non-blocking I/O operations. Undertow’s worker threads and I/O threads are managed through this custom system, which has finer control over thread allocation, scheduling, and interaction with non-blocking I/O
+
    - **IO Threads**:  
      These threads handle I/O operations (like accepting requests) and are named `XNIO-<instance>-I/O-<number>`.
      - `<instance>` is an identifier for the XNIO instance (typically `1`).
