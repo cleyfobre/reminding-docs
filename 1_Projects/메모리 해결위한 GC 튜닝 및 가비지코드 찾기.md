@@ -1,12 +1,16 @@
-#garbage #gc #garbagecollector #garbagecollect #memory #java 
+#garbage #gc #garbagecollector #garbagecollect #memory #java #g1gc #zgc #cgc #concurrentgc
 
-Yes, you’re absolutely correct! Addressing high heap memory usage and frequent major GCs involves a combination of tuning GC settings and identifying any inefficient memory usage patterns in your code. Here’s a breakdown of each approach:
+Addressing high heap memory usage and frequent major GCs involves a combination of tuning GC settings and identifying any inefficient memory usage patterns in your code. Here’s a breakdown of each approach
+
+해당 문제에 대한 카톡 내용 [[GC 관련 피드백]]
+#### GC 과정
+
+Garbage Collection 과정은 **Mark and Sweep** 이라고도 한다. **JVM의 Garbage Collector 가 스택의 모든 변수를 스캔하면서 각각 어떤 오브젝트를 레퍼런스 하고 있는지 찾는과정이 Mark** 다. 그리고 나서 **mark 되어있지 않은 모든 오브젝트들을 힙에서 제거하는 과정이 Sweep** 이다.
+#### Heap 메모리 확인할 때 컬럼 보는 법
 
 > [!note] 치트키
 > `jstat -gc <pid> 1000` 로 1초마다 heap메모리 상태를 확인할 수 있다.
 > pid는 `ps aux --sort=-%mem | head` 로 메모리 많이 차지하는 순으로 확인하자.
-
-#### Heap 메모리 확인할 때 컬럼 보는 법
 
 | Column | Full Name                       | Description                                                          |
 | ------ | ------------------------------- | -------------------------------------------------------------------- |
@@ -50,7 +54,19 @@ Yes, you’re absolutely correct! Addressing high heap memory usage and frequent
  0.0   2048.0  0.0   2048.0 449536.0 236544.0  266240.0   113414.7  134096.0 130713.1 16892.0 15672.7 113131  396.672   0      0.000  22      0.532  397.205
 ```
 
+GC에서는 앱의 워크스레드를 멈추지 않고 동시적으로(Concurrently) GC를 수행하기도 한다.
 
+1. G1 Garbage Collector (G1 GC)
+	1. Concurrent Marking Phase(Reachable Object를 표시하기) 동안 G1 GC가 일어난다.
+2. Concurrent Mark-Sweep (CMS) Collector
+	1. Old 영역에서 일어나는 Concurrent GC. 보통 68%~92%사이 일어난다.
+3. **Z Garbage Collector (ZGC)** and **Shenandoah GC**
+	1. Young과 Old 모두 짧은 주기로 계속 일어난다.
+
+> [!tip] Unreachable Object
+> Stack 에서 도달할 수 없는 Heap 영역의 객체
+
+이렇게 총 세 가지의 경우가 있는데, 딥하게 알아보지 않아도 될 것 같다. CGC는 어쨌든 Old 영역에서 보통 일어나는 GC다. App 스레드와 같이 진행된다.
 
 These full names should make it easier to understand each memory pool and its usage when interpreting `jstat` or GC log outputs.
 ### 1. **Configure GC Options to Run Major GC Before the Old Generation Gets Full**
