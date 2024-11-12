@@ -61,6 +61,7 @@ Would you like guidance on setting custom thread names?
 > WAS들은 Java에서 제공하는 `java.util.concurrent.ExecutorService`를 직접적으로 사용하지 않았다. 하지만 컨샙은 매우 비슷하게 자신들의 코드로 자신들만의 Thread Pool을 만들었다.
 > Each web application server (WAS) typically implements its **own custom thread pool** mechanism rather than directly using `java.util.concurrent.ExecutorService`. However, most of these implementations are conceptually similar to `ExecutorService` and often inspired by `java.util.concurrent` classes, especially `ThreadPoolExecutor`.
 
+#todo
 ### 쓰레드는 다다익선? 너무 많을 때의 부작용
 
 ### 컨텍스트 스위칭 비용
