@@ -51,6 +51,55 @@ You can observe these thread names in tools like JConsole, VisualVM, or similar 
 
 Would you like guidance on setting custom thread names?
 
+---
+### Undertow 설정
+
+jhipster로 프로젝트 생성시 SpringBoot 기본 WAS인 Tomcat말고 Undertow로 설정하도록 되어 있습니다.
+
+```groovy
+...
+configurations {
+	...
+  implementation.exclude module: "spring-boot-starter-tomcat"
+  ...
+}
+...
+dependencies {
+	...
+	implementation "org.springframework.boot:spring-boot-starter-undertow"
+	...
+}
+```
+
+### 스레드
+
+Undertow의 스레드는 두 유형으로 나뉩니다.
+
+1. I/O 스레드: http 리퀘스트를 받는 스레드
+2. 워커 스레드: 비즈니스 로직을 수행하는 스레드
+
+### 스레드 기본값
+
+1. I/O 스레드: 서버의 core 갯수로 세팅됨
+    1. 예를 들어, t3.medium 서버에서는 2개의 vcpu를 사용하기 때문에 2개의 I/O 스레드가 기본 생성됩니다.
+2. 워커 스레드: I/O 스레드의 8배까지 최댓값으로 생성됨
+    1. 예를 들어, I/O 스레드가 2개면 최대 16개까지 생성됨(2 X 8)
+
+### 스레드 라이프사이클
+
+1. I/O 스레드: 부팅시 생성되며 App의 생명주기를 같이 합니다.
+2. 워커 스레드: 부팅시 0개이며, 요청이 들어올 때 생성이 됩니다. 부하가 되면 성능을 유지하기 위해 추가적으로 생성됩니다. 설정상 최댓값까지만 생성됩니다. 생성된 스레드는 사라지지 않고, idle 상태로 남습니다.
+
+### 기본값 대신 커스터마이징하기
+
+```yaml
+server:
+  undertow:
+    threads:
+      io: 4
+      worker: 50
+```
+
 ### WAS마다 존재하는 built-in 스레드풀
 
 - **Tomcat**: Uses `org.apache.tomcat.util.threads.ThreadPoolExecutor`, which is similar to Java’s `ThreadPoolExecutor`.

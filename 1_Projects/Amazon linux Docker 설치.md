@@ -13,6 +13,7 @@ Amazon Linux 2 에서와 동일하게 Docker Compose Plugin 은 별도로 포함
 
 ```bash
 # Docker
+sudo yum update -y
 sudo yum install -y docker
 sudo service docker start
 sudo usermod -a -G docker ec2-user
@@ -54,6 +55,7 @@ docker 설치하는 것만 다르고 docker compose는 어차피 curl로 받는 
 1. Docker 설치하기
 
 ```bash
+sudo yum update -y
 sudo amazon-linux-extras install docker
 sudo service docker start
 sudo usermod -a -G docker ec2-user
