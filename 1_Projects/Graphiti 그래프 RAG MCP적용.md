@@ -17,14 +17,14 @@ https://github.com/getzep/graphiti/blob/main/mcp_server/README.md#prerequisites
 - A running Neo4j database (version 5.26 or later required)
 - OpenAI API key for LLM operations
 
-### 필요조건 진행
-- python 깔면 되고
-- neo4j docker-compose 파일 clone 받으면 있음
+### 필요조건 진행방법
+- python은 그냥 깔면 되고
+- neo4j docker-compose 파일은 위에 repo를 clone 받으면 있음
 - OpenAI API 20달러만 결제해 놓음. 미리 알람 설정해놓을 수도 있음. 나는 예산에 80% 채워지면 에러나도록 수정함.
 
 ### 방법
 - 공식 문서에 uv 사용, .env 설정 등등 많은데, 다 필요없고...
-- mcp 하고 싶으면 clone 받은 폴더에 mcp_server 폴더로 이동하면 docker-compose.yml 이 있다.
+- mcp를 하고 싶으면 clone 받은 폴더에 mcp_server 폴더로 이동하면 docker-compose.yml 이 있다.
 - docker-compose.yml 을 아래와 같이 되어 있을 것.. OpenAI key랑 사용하고 싶은 gpt 모델 넣고 docker-compose up 하면 된다. 자세한 api 가격은 아래 링크 참고한다.
   - https://platform.openai.com/docs/pricing
 
@@ -65,7 +65,7 @@ services:
       - NEO4J_URI=${NEO4J_URI:-bolt://neo4j:7687}
       - NEO4J_USER=${NEO4J_USER:-neo4j}
       - NEO4J_PASSWORD=${NEO4J_PASSWORD:-demodemo}
-      - OPENAI_API_KEY=
+      - OPENAI_API_KEY={여기에 OpenAi API Key를 넣자}
       - MODEL_NAME=gpt-4.1-mini
       - PATH=/root/.local/bin:${PATH}
       - SEMAPHORE_LIMIT=${SEMAPHORE_LIMIT:-10}
