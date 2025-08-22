@@ -95,7 +95,7 @@ xcode-select -p
 - 프로젝트 상단으로 이동한다. ls 명령어를 쓰면 다음과 같이 나올 것이다.
   - growtodo		growtodo.xcodeproj	growtodoTests		growtodoUITests
 - 현재 directory 에서 다음 명령어를 실행한다.
-```
+```shell
 # 빌드
 xcodebuild -project growtodo.xcodeproj -scheme growtodo -configuration Release -derivedDataPath ./build clean build
 
