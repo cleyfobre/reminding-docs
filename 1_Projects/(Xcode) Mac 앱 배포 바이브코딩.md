@@ -7,7 +7,7 @@
 ### 앱스토어에서 Xcode 설치
 Apple Developer 에서 계정 생성은 안했다. 테스트용인데 매년 12만원도 아깝고, 앱 스토어에 배포하지는 않을 것이기 때문에 일단 Apple Developer 계정 없이 진행한다.
 
-### Xcode 실행
+### Xcode 실행 및 개발
 - 새 프로젝트를 생성
 - 'App'을 선택한다.
 ```
@@ -29,13 +29,15 @@ Apple Developer 에서 계정 생성은 안했다. 테스트용인데 매년 12�
 ```
 
 - 프로젝트 이름은 growtodo 로 정한다.
+- Team 은 None 이다.
 - Testing System은 현재 그대로 유지 (현재: Swift Testing with XCTest UI Tests)
   - 초보자에게 가장 적합한 기본 설정
   - 단위 테스트와 UI 테스트 모두 지원
   - Apple이 공식 지원하는 테스팅 프레임워크
   - 나중에 필요하면 테스트 코드 작성 가능
 - Storage도 None (나중에 AWS 등의 클라우드를 이용할 예정)
-- 나의 코드
+
+### 나의 코드
 ```swift
 import SwiftUI
 
@@ -59,3 +61,14 @@ struct ContentView: View {
     ContentView()
 }
 ```
+
+### 빌드 및 배포
+- Xcode에서 할 수 있으나, Apple Developer 코드 서명이 필요하기에 CLI로 빌드를 진행한다.
+- 참고로 Xcode에서는 다음과 같이 진행한다.
+  - 상단 탭에서 'Product' -> 안전하게 Clean Build Folder... -> Archive
+  - <img width="1400" height="853" alt="image" src="https://github.com/user-attachments/assets/0f7f709a-0609-4da7-9411-d1005e26a851" />
+  - 위 이미지가 나오면 Direct Distibution을 선택한다. App Store 없이 직접 배포할꺼고, Web에서 다운로드 링크 제공할 것이기 때문이다. 그리고 Apple Developer 계정없이도 가능하다.
+  - 혹시라도 team 을 세팅했었다면 다음 이미지를 참고하여 team 설정을 제거한다. (Automatically manage signing)
+  - <img width="3038" height="1138" alt="image" src="https://github.com/user-attachments/assets/3f880123-ad1c-490c-8743-7fd0dddca543" />
+  - 하지만 이렇게 해도 아래와 같은 에러가 나오면서 안될 것이다. 그러니 CLI로 진행한다.
+  - 'No Team Found in Archive. Use the Signing & Capabilities editor to assign a team to the targets and build a new archive.'
