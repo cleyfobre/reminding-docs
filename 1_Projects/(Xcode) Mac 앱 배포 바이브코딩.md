@@ -28,3 +28,34 @@ Apple Developer 에서 계정 생성은 안했다. 테스트용인데 매년 12�
   일반 Mac 앱이 아님
 ```
 
+- 프로젝트 이름은 growtodo 로 정한다.
+- Testing System은 현재 그대로 유지 (현재: Swift Testing with XCTest UI Tests)
+  - 초보자에게 가장 적합한 기본 설정
+  - 단위 테스트와 UI 테스트 모두 지원
+  - Apple이 공식 지원하는 테스팅 프레임워크
+  - 나중에 필요하면 테스트 코드 작성 가능
+- Storage도 None (나중에 AWS 등의 클라우드를 이용할 예정)
+- 나의 코드
+```swift
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Image(systemName: "globe")
+                .imageScale(.large)
+                .foregroundStyle(.tint)
+            Text("안녕하세요!")
+                .font(.title2)
+                .foregroundColor(.secondary)
+        }
+        .frame(minWidth: 300, minHeight: 200)
+                .background(Color(.windowBackgroundColor))
+        .padding()
+    }
+}
+
+#Preview {
+    ContentView()
+}
+```
