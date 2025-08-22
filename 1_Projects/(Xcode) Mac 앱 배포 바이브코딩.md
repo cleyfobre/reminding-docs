@@ -72,3 +72,44 @@ struct ContentView: View {
   - <img width="3038" height="1138" alt="image" src="https://github.com/user-attachments/assets/3f880123-ad1c-490c-8743-7fd0dddca543" />
   - 하지만 이렇게 해도 아래와 같은 에러가 나오면서 안될 것이다. 그러니 CLI로 진행한다.
   - 'No Team Found in Archive. Use the Signing & Capabilities editor to assign a team to the targets and build a new archive.'
+- CLI 배포는 다음과 같이 진행한다.
+- Xcode가 아닌 CLI를 사용하면 xcodebuild 명령어가 안될 것이니, 다음을 실행한다.
+```
+# 터미널은 연다.
+
+# 현재 설정 확인
+xcode-select -p
+
+# xcode.app의 경로 확인하기.
+ls -la /Applications/ | grep -i xcode
+
+# 정식 설치라면 이 경로를 사용하면 된다. /Applications/Xcode.app/Contents/Developer
+
+# Xcode로 변경 (비밀번호 입력 필요)
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+# 설정 확인
+xcode-select -p
+
+```
+- 프로젝트 상단으로 이동한다. ls 명령어를 쓰면 다음과 같이 나올 것이다.
+  - growtodo		growtodo.xcodeproj	growtodoTests		growtodoUITests
+- 현재 directory 에서 다음 명령어를 실행한다.
+```
+# 빌드
+xcodebuild -project growtodo.xcodeproj -scheme growtodo -configuration Release -derivedDataPath ./build clean build
+
+# 빌드 완료 후 생성된 앱 확인
+ls ./build/Build/Products/Release/
+
+# growtodo.app 파일이 생성됨
+
+# Release 폴더로 이동
+cd ./build/Build/Products/Release/
+
+# 앱을 zip으로 압축
+zip -r growtodo.zip growtodo.app
+
+# 압축 파일 확인
+ls -la growtodo.zip
+```
