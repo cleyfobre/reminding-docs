@@ -10,22 +10,22 @@ Apple Developer 에서 계정 생성은 안했다. 테스트용인데 매년 12�
 ### Xcode 실행 및 개발
 - 새 프로젝트를 생성
 - 'App'을 선택한다.
-```
-  App (선택해야 할 것):
-  일반적인 Mac 애플리케이션
-  독립적으로 실행되는 앱
-  웹에서 다운로드 배포에 가장 적합
-  여러분이 원하는 일반적인 Mac 앱
+```yaml
+App (선택해야 할 것):
+  - 일반적인 Mac 애플리케이션
+  - 독립적으로 실행되는 앱
+  - 웹에서 다운로드 배포에 가장 적합
+  - 여러분이 원하는 일반적인 Mac 앱
   
-  Document App:
-  특정 문서 형식을 다루는 앱 (예: 텍스트 에디터, 이미지 뷰어)
-  파일 열기/저장이 주요 기능인 앱
-  복잡한 문서 관리 기능이 필요할 때
+Document App:
+  - 특정 문서 형식을 다루는 앱 (예: 텍스트 에디터, 이미지 뷰어)
+  - 파일 열기/저장이 주요 기능인 앱
+  - 복잡한 문서 관리 기능이 필요할 때
   
-  Safari Extension App:
-  Safari 브라우저 확장 프로그램
-  웹 브라우징을 도와주는 도구
-  일반 Mac 앱이 아님
+Safari Extension App:
+  - Safari 브라우저 확장 프로그램
+  - 웹 브라우징을 도와주는 도구
+  - 일반 Mac 앱이 아님
 ```
 
 - 프로젝트 이름은 growtodo 로 정한다.
@@ -74,7 +74,7 @@ struct ContentView: View {
   - 'No Team Found in Archive. Use the Signing & Capabilities editor to assign a team to the targets and build a new archive.'
 - CLI 배포는 다음과 같이 진행한다.
 - Xcode가 아닌 CLI를 사용하면 xcodebuild 명령어가 안될 것이니, 다음을 실행한다.
-```
+```shell
 # 터미널은 연다.
 
 # 현재 설정 확인
